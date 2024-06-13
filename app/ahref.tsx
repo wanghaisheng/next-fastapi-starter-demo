@@ -1,53 +1,50 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import { useStore } from "./store";
-import axios from "axios"; // Import Axios library
+
 const Ahref = () => {
-  const [keywords, setKeywords] = useState("");
+  const [keywords, setKeywords] = useState(""); // State to store the search keywords
+  const { ahrefData, ahrefError, fetchAhrefs } = useStore(); // Destructure state and actions
 
-  // Destructure state and the fetchAhrefs action from useStore
-  const { ahrefData, ahrefError, fetchAhrefs } = useStore();
-
-  useEffect(() => {
-    if (keywords) {
-      fetchAhrefs(keywords); // Call the fetchAhrefs action
-    }
-  }, [keywords]); // Only keywords is needed in the dependency array
+  // ... (other logic such as useEffect for fetching data)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Construct API URL dynamically based on environment
-    const URL = process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
-      : "http://localhost:8000/api";
-
-    // Make HTTP request to backend API
-    try {
-      const response = await axios.get(`${URL}/ahref/kd/${keywords}`);
-      // Assuming your backend response contains keyword, kd, and des properties
-      console.log(response.data);
-      // Handle response data as required
-    } catch (error) {
-      // Handle error
-      console.error("Error fetching Ahref data:", error);
+    e.preventDefault(); // Prevent default form submission behavior
+    if (keywords) {
+      fetchAhrefs(keywords); // Call the fetchAhrefs action with the entered keywords
     }
-    // Optionally clear keywords if you want to prevent resubmission
-    setKeywords("");
+    setKeywords(""); // Optionally reset the keywords input after submission
   };
 
   return (
     <div>
-      {" "}
-      {/* Parent element wrapping all other elements */}
-      <form onSubmit={handleSubmit}>{/* ... form inputs and button */}</form>
+      {/* Form for submitting search keywords */}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="keywords">Enter Keywords:</label>
+        <input
+          id="keywords"
+          type="text"
+          value={keywords}
+          onChange={(e) => setKeywords(e.target.value)}
+          placeholder="Type keywords here"
+        />
+        <button type="submit">Search</button>
+      </form>
+
       {ahrefError && <div className="error">Error: {ahrefError}</div>}
+
       {ahrefData && ahrefData.length > 0 && (
         <div>
           {/* Render the Ahrefs data */}
-          {ahrefData.map((data, index) => (
-            <div key={data.id}>{data.yourProperty}</div> // Replace with actual property
-          ))}
+          {ahrefData.map((data, index) => {
+            // Ensure you have a unique identifier for each data item
+            const uniqueKey = `ahref_${index}`; // Replace with a more unique key if possible
+            return (
+              <div key={uniqueKey}>
+                {/* Replace with the actual property you want to display */}
+                {data.keyword} - KD: {data.kd} - Domain Authority: {data.des}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
