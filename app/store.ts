@@ -66,8 +66,15 @@ export const useStore = create<StoreType>((set) => ({
       }
       const data: AhrefsData[] = await response.json()
       set((state) => ({ ahrefData: data }))
-    } catch (error) {
-      set((state) => ({ ahrefError: error.message })) // Update ahrefError on error
+
+    } catch (error: unknown) { // Type the error as 'unknown' and cast when using properties
+      if (error instanceof Error) {
+        set((state) => ({ ahrefError: error.message }))
+      } else {
+        // Handle the case where error is not an instance of Error
+        set((state) => ({ ahrefError: 'An unknown error occurred' }))
+      }
+
     }
   },
   todos: [],
