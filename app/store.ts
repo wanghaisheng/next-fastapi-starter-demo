@@ -33,14 +33,14 @@ const URL = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
   : "http://localhost:8000/api"
 
-// Define the shape of the store object
+// Combine TodoStore and AhrefsState into one type for the store
 type StoreType = TodoStore & AhrefsState
 
 // Define the useStore hook
 export const useStore = create<StoreType>((set) => ({
-  // AhrefsState properties and methods
+  // State properties from AhrefsState
   ahrefData: [],
-  ahrefError: null as string | null, // Explicitly type null as string | null
+  ahrefError: null,
   // Define the fetchAhrefs action correctly
   async fetchAhrefs(keywords: string) {
     try {
