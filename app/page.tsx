@@ -90,7 +90,7 @@ export default function Home() {
           ))}
         </div>
 
-        <Link href="/href">Settings</Link>
+        <Link href="/ahref">Settings</Link>
       </div>
 
       <Toaster richColors expand={true} position="bottom-right" />
