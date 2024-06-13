@@ -34,9 +34,11 @@ const URL = process.env.NEXT_PUBLIC_VERCEL_URL
   : "http://localhost:8000/api"
 
 export const useStore = create<TodoStore & AhrefsState>((set) => ({
+  // AhrefsState properties
   ahrefData: [],
-  ahrefError: null,
+  ahrefError: null as string | null, // Use as to explicitly set the type for null
 
+  // Define the fetchAhrefs action correctly
   async fetchAhrefs(keywords: string) {
     try {
       const response = await fetch(`${URL}/api/ahref/kd`, {
@@ -52,7 +54,7 @@ export const useStore = create<TodoStore & AhrefsState>((set) => ({
       const data: AhrefsData[] = await response.json()
       set((state) => ({ ahrefData: data }))
     } catch (error) {
-      console.error("Error fetching todos:", error)
+      set((state) => ({ ahrefError: error.message })) // Update ahrefError on error
     }
   },
   todos: [],
