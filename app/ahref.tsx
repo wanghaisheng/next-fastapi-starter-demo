@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import { useStore } from "@/store";
+import { useStore } from "./store";
 import axios from "axios"; // Import Axios library
 
 const Ahref = () => {
