@@ -6,14 +6,15 @@ import axios from "axios"; // Import Axios library
 
 const Ahref = () => {
   const [keywords, setKeywords] = useState("");
-  const { ahrefData, ahrefError } = useStore(); // Destructure state
-  const { fetchAhrefs } = useStore(); // Destructure the fetchAhrefs action
+
+  // Destructure both state and actions in one line
+  const { ahrefData, ahrefError, fetchAhrefs } = useStore();
 
   useEffect(() => {
     if (keywords) {
-      fetchAhrefs(keywords); // Call the fetchAhrefs action
+      fetchAhrefs(keywords); // Call the fetchAhrefs action when keywords change
     }
-  }, [keywords, fetchAhrefs]); // Add fetchAhrefs to the dependency array
+  }, [keywords, fetchAhrefs]); // Ensure fetchAhrefs is in the dependency array
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
