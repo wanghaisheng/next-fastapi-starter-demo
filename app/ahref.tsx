@@ -6,17 +6,13 @@ import axios from "axios"; // Import Axios library
 
 const Ahref = () => {
   const [keywords, setKeywords] = useState("");
-  const { ahrefData, ahrefError, fetchAhrefs } = useStore((state) => ({
-    ahrefData: state.ahrefData,
-    ahrefError: state.ahrefError,
-    fetchAhrefs: state.fetchAhrefs,
-  }));
-
+  const { ahrefData, ahrefError } = useStore(); // Access state directly
+  const fetchAhrefs = useStore.getState().fetchAhrefs; // Access the
   useEffect(() => {
     if (keywords) {
-      fetchAhrefs(keywords);
+      fetchAhrefs(keywords); // Call the action with the selected keywords
     }
-  }, [keywords, fetchAhrefs]);
+  }, [keywords]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
