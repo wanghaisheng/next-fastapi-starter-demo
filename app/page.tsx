@@ -1,5 +1,5 @@
 "use client";
-import { IconType } from 'react-icons'
+import { IconType } from "react-icons";
 import {
   SiDaisyui,
   SiFastapi,
@@ -9,14 +9,15 @@ import {
   SiPostcss,
   SiTailwindcss,
   SiTypescript,
-} from 'react-icons/si'
-import SquigglyLine from './components/SquigglyLine'
-import { Toaster, toast } from 'sonner';
+} from "react-icons/si";
+import SquigglyLine from "./components/SquigglyLine";
+import { Toaster, toast } from "sonner";
+import Link from "next/link"; // Import the Link component
 
 type Tool = {
   icon: IconType;
   link: string;
-}
+};
 
 const tools: Tool[] = [
   {
@@ -51,31 +52,27 @@ const tools: Tool[] = [
     icon: SiFastapi,
     link: "https://fastapi.tiangolo.com/",
   },
-]
+];
 
 export default function Home() {
   // create function to handle button click
   // Send get request to /api/greet
   // On success, show toast with the message
   const handleClick = () => {
-    toast.success("Hello, World!")
-  }
+    toast.success("Hello, World!");
+  };
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen py-2">
       <div className="flex flex-col items-center p-24">
         <h1 className="text-4xl font-bold text-center">
-          <span className='text-[#0070f3]'>Next.js</span>
-          {' '} + {' '}
-          <span className='text-[#009485]'>FastAPI</span>
-          {' '} + {' '}
-          <span className='text-[#ff5a00]'>DaisyUI</span>
+          <span className="text-[#0070f3]">Next.js</span> +{" "}
+          <span className="text-[#009485]">FastAPI</span> +{" "}
+          <span className="text-[#ff5a00]">DaisyUI</span>
           <br />
-          <span className='relative whitespace-nowrap'>
+          <span className="relative whitespace-nowrap">
             <SquigglyLine />
-            <span className='relative text-fuchsia-600'>
-              Starter
-            </span>
+            <span className="relative text-fuchsia-600">Starter</span>
           </span>
         </h1>
 
@@ -92,15 +89,20 @@ export default function Home() {
             </a>
           ))}
         </div>
+
+        <Link href="/href">Settings</Link>
       </div>
 
       <Toaster richColors expand={true} position="bottom-right" />
 
-      <div className='flex flex-col items-center justify-center space-y-4 max-w-md w-full'>
-        <button className='d-btn d-btn-outline d-btn-success w-full' onClick={() => handleClick()}>
+      <div className="flex flex-col items-center justify-center space-y-4 max-w-md w-full">
+        <button
+          className="d-btn d-btn-outline d-btn-success w-full"
+          onClick={() => handleClick()}
+        >
           Click Me! 🎉
         </button>
       </div>
     </main>
-  )
+  );
 }

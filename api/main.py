@@ -8,6 +8,16 @@ app = FastAPI(
 )
 
 app.get("/api/greet")
+
+
 def greet():
+    """Returns a greeting"""
+    return {"message": "Hello from the backend!"}
+
+
+app.get("/api/ahref")
+
+
+def ahref():
     """Returns a greeting"""
     return {"message": "Hello from the backend!"}
