@@ -1,10 +1,10 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { useAhrefsStore } from "./ahrefdata";
 
 const Ahref = () => {
   const [keywords, setKeywords] = useState(""); // State to store the search keywords
   const { ahrefData, ahrefError, fetchAhrefs } = useAhrefsStore(); // Destructure state and actions
-  const [keywords, setKeywords] = useState("");
 
   // ... (other logic such as useEffect for fetching data)
 
