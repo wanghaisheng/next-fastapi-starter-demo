@@ -6,8 +6,11 @@ import axios from "axios"; // Import Axios library
 
 const Ahref = () => {
   const [keywords, setKeywords] = useState("");
-  const { ahrefData, ahrefError } = useStore();
-  const fetchAhrefs = useStore((state) => state.fetchAhrefs);
+  const { ahrefData, ahrefError, fetchAhrefs } = useStore((state) => ({
+    ahrefData: state.ahrefData,
+    ahrefError: state.ahrefError,
+    fetchAhrefs: state.fetchAhrefs,
+  }));
 
   useEffect(() => {
     if (keywords) {
