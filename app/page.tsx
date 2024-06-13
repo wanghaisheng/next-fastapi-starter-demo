@@ -1,4 +1,3 @@
-"use client";
 import { IconType } from "react-icons";
 import {
   SiDaisyui,
@@ -90,7 +89,7 @@ export default function Home() {
           ))}
         </div>
 
-        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/ahref`}>Settings</Link>
+        <Link href="/ahref">Settings</Link>
       </div>
 
       <Toaster richColors expand={true} position="bottom-right" />
