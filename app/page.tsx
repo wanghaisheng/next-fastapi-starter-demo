@@ -90,7 +90,7 @@ export default function Home() {
           ))}
         </div>
 
-        <Link href="/ahref">Settings</Link>
+        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/ahref`}>Settings</Link>
       </div>
 
       <Toaster richColors expand={true} position="bottom-right" />
