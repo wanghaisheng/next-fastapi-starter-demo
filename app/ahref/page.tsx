@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useAhrefsStore } from "./ahrefdata";
+import { useAhrefsStore } from "@/ahrefdata";
 
 const Ahref = () => {
   const [keywords, setKeywords] = useState(""); // State to store the search keywords
