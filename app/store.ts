@@ -1,4 +1,5 @@
 import { create } from "zustand"
+
 type Todo = {
   id: number
   title: string
@@ -17,7 +18,11 @@ type TodoStore = {
   deleteTodo: (id: number) => void
 }
 
-export const useTodoStore = create<TodoStore>((set) => ({
+const URL = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+  : "http://localhost:3000/api"
+
+export const useStore = create<TodoStore>((set) => ({
   todos: [],
   fetchTodos: async () => {
     try {
@@ -53,7 +58,6 @@ export const useTodoStore = create<TodoStore>((set) => ({
         body: JSON.stringify(updatedTodo),
       })
       const updatedItem = await response.json()
-      console.log('Updated todos array:', set((state) => state.todos)) // Check the todos array
       set((state) => ({
         todos: state.todos.map((todo) =>
           todo.id === updatedItem.id ? updatedItem : todo
