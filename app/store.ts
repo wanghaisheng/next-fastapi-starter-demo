@@ -34,13 +34,23 @@ const URL = process.env.NEXT_PUBLIC_VERCEL_URL
   : "http://localhost:8000/api"
 
 // Combine TodoStore and AhrefsState into one type for the store
-type StoreType = TodoStore & AhrefsState
+type StoreType = {
+  todos: Todo[]
+  ahrefData: AhrefsData[]
+  ahrefError: string | null
+  fetchTodos: () => Promise<void>
+  addTodo: (todo: CreateTodo) => Promise<void>
+  updateTodo: (todo: Todo) => Promise<void>
+  deleteTodo: (id: number) => Promise<void>
+  fetchAhrefs: (keywords: string) => Promise<void> // Make sure this is included
+}
 
-// Define the useStore hook
+// The useStore hook
 export const useStore = create<StoreType>((set) => ({
-  // State properties from AhrefsState
+  todos: [],
   ahrefData: [],
   ahrefError: null,
+  // Define the useStore hook
   // Define the fetchAhrefs action correctly
   async fetchAhrefs(keywords: string) {
     try {
