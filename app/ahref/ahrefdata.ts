@@ -1,16 +1,19 @@
 import { create } from "zustand"
+import { get } from "axios" // Importing get method from axios for fetching data
 
 type AhrefsData = {
         keyword: string
         kd: number
         des: string
 }
+
 type AhrefsState = {
         ahrefData: AhrefsData[]
         ahrefError: string | null
-        fetchAhrefs: (keywords: string) => void
+        fetchAhrefs: (keywords: string) => Promise<void> // Return type is Promise<void>
 }
 
+// Ensure the URL is correctly set based on the environment
 const URL = process.env.NEXT_PUBLIC_VERCEL_URL
         ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
         : "http://localhost:3000/api"
@@ -18,31 +21,28 @@ const URL = process.env.NEXT_PUBLIC_VERCEL_URL
 export const useAhrefsStore = create<AhrefsState>((set) => ({
         ahrefData: [],
         ahrefError: null,
-        // Define the useStore hook
-        // Define the fetchAhrefs action correctly
         async fetchAhrefs(keywords: string) {
                 try {
-                        const response = await fetch(`${URL}/ahref/kd`, {
-                                method: 'POST',
+                        // Base64 decode the keywords
+                        const decodedKeywords = atob(keywords) // atob is used to decode a base64 encoded string
+                        // const keywordList = decodedKeywords.split(',')
+
+                        // Use axios.get with proper headers for GET request
+                        const response = await get(`${URL}/ahref/kd/?keywords=${encodeURIComponent(decodedKeywords)}`, {
                                 headers: {
                                         'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify({ keywords }),
                         })
+
                         if (!response.ok) {
                                 throw new Error(`HTTP error! status: ${response.status}`)
                         }
-                        const data: AhrefsData[] = await response.json()
+
+                        const data: AhrefsData[] = response.data
                         set((state) => ({ ahrefData: data }))
-
-                } catch (error) { // Type the error as 'unknown' and cast when using properties
-                        if (error instanceof Error) {
-                                console.error("Error AhrefsData:", error)
-                        } else {
-                                // Handle the case where error is not an instance of Error
-                                console.error("Error AhrefsData :", error)
-                        }
-
+                } catch (error) {
+                        set({ ahrefError: error.message }) // Update the error state with the error message
+                        console.error("Error fetching AhrefsData:", error.message)
                 }
         },
 }))
