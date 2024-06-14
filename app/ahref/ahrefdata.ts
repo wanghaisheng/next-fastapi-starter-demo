@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { get } from "axios" // Importing get method from axios for fetching data
+import get from "axios" // Importing get method from axios for fetching data
 
 type AhrefsData = {
         keyword: string
